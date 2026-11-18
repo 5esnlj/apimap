@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f5f7f4">
+    <meta name="description" content="출발지와 도착지를 검색하고 자동차 경로 거리를 확인하세요.">
+    <title>어디까지? — 거리 계산</title>
+    <link rel="preconnect" href="https://nominatim.openstreetmap.org">
+    <link rel="preconnect" href="https://router.project-osrm.org">
+    <link rel="stylesheet" href="./styles.css">
+    <script src="./app.js" defer></script>
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="./" aria-label="어디까지? 홈">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none">
+              <path d="M7 23.5 12.5 8l7 16 5.5-15" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="7" cy="24" r="3" fill="currentColor"/>
+              <circle cx="25" cy="9" r="3" fill="currentColor"/>
+            </svg>
+          </span>
+          <span>어디까지<span class="brand-period">?</span></span>
+        </a>
+        <span class="topbar-note"><span class="live-dot"></span> OpenStreetMap 기반</span>
+      </header>
+
+      <section class="intro" aria-labelledby="page-title">
+        <p class="eyebrow">오늘의 여정을 그려보세요</p>
+        <h1 id="page-title">어디에서<br><span>어디까지</span> 가시나요?</h1>
+        <p class="intro-copy">장소를 검색하고 두 지점 사이의 자동차 이동 거리를 확인해 보세요.</p>
+      </section>
+
+      <section class="planner" aria-label="거리 계산">
+        <div class="route-line" aria-hidden="true"><span></span><i></i><span></span></div>
+        <div class="place-card" id="origin-card">
+          <div class="place-heading">
+            <label for="origin-input">출발지</label>
+            <span class="place-tag">FROM</span>
+          </div>
+          <div class="search-row">
+            <input id="origin-input" type="search" placeholder="예: 서울역, 부산 해운대구" autocomplete="off" aria-describedby="origin-status">
+            <button class="search-button" type="button" data-search="origin">검색</button>
+          </div>
+          <p class="field-status" id="origin-status" aria-live="polite">장소 이름을 입력하고 검색해 주세요.</p>
+          <div class="results" id="origin-results" role="listbox" aria-label="출발지 검색 결과" hidden></div>
+          <div class="selected-place" id="origin-selected" hidden></div>
+        </div>
+
+        <div class="place-divider" aria-hidden="true"><span></span></div>
+
+        <div class="place-card" id="destination-card">
+          <div class="place-heading">
+            <label for="destination-input">도착지</label>
+            <span class="place-tag">TO</span>
+          </div>
+          <div class="search-row">
+            <input id="destination-input" type="search" placeholder="예: 경복궁, 제주국제공항" autocomplete="off" aria-describedby="destination-status">
+            <button class="search-button" type="button" data-search="destination">검색</button>
+          </div>
+          <p class="field-status" id="destination-status" aria-live="polite">장소 이름을 입력하고 검색해 주세요.</p>
+          <div class="results" id="destination-results" role="listbox" aria-label="도착지 검색 결과" hidden></div>
+          <div class="selected-place" id="destination-selected" hidden></div>
+        </div>
+
+        <button class="calculate-button" id="calculate-button" type="button" disabled>
+          <span>거리 계산하기</span>
+          <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h11m0 0-4.5-4.5M15 10l-4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </section>
+
+      <section class="distance-card" id="distance-card" aria-live="polite" hidden>
+        <div class="distance-label"><span class="distance-icon" aria-hidden="true">↗</span> 자동차 경로 거리</div>
+        <p class="distance-value" id="distance-value">—</p>
+        <p class="distance-description" id="distance-description"></p>
+        <a class="map-link" id="map-link" href="#" target="_blank" rel="noopener noreferrer">
+          지도에서 보기
+          <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5.5 3.5h7v7m-.5-6.5-7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </section>
+
+      <p class="page-note">경로는 자동차 기준으로 계산되며, 실제 도로 상황에 따라 달라질 수 있어요.</p>
+      <footer class="footer">
+        <span>지도 데이터 © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> 기여자</span>
+        <span>검색: Nominatim · 경로: OSRM</span>
+      </footer>
+    </main>
+  </body>
+</html>
